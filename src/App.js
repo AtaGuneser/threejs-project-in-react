@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import styled from "styled-components";
+import { Canvas } from '@react-three/fiber'
+import Background from "./components/Background";
+import TextSection from "./components/TextSection";
+import Box from "./components/Box";
+import Home from "./components/Home";
+import Anime from "./components/Anime";
+import { OrbitControls } from "@react-three/drei";
+import React, { Suspense } from "react";
+import AnimatedSphere from "./components/AnimatedSphere";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper className="App">
+      <Background />
+      <TextSection />
+      <Canvas className="canvas">
+        <OrbitControls enableZoom={false} />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[-2, 5, 2]} intensity={1} />
+        <Suspense fallback={null}>
+          <Box />
+        </Suspense>
+      </Canvas>
+      <Canvas className="canvas">
+        <OrbitControls enableZoom={false} />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[-2, 5, 2]} intensity={1} />
+        <Suspense fallback={null}>
+          <AnimatedSphere />
+        </Suspense>
+      </Canvas>
+      <Canvas className="canvas">
+        <OrbitControls enableZoom={true} />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[-2, 5, 2]} intensity={1} />
+        <Suspense fallback={null}>
+          <Home />
+        </Suspense>
+      </Canvas>
+      {/* <Canvas className="canvas">
+        <OrbitControls enableZoom={true} />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[-2, 5, 2]} intensity={1} />
+        <Suspense fallback={null}>
+          <Anime />
+        </Suspense>
+      </Canvas> */}
+    </Wrapper>
   );
 }
 
-export default App;
+const Wrapper = styled.div`
+  position: relative;
+  background: #1f1144;
+  canvas {
+  height: 500px;
+  ;
+  }
+`;
+
